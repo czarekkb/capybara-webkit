@@ -51,7 +51,9 @@ void FrameFocus::focusId(QString name) {
 
 void FrameFocus::focusParent() {
   if (page()->currentFrame()->parentFrame() == 0) {
-    emit finished(new Response(false, QString("Already at parent frame.")));
+    // Note: if an iframe gets replaced with another one,
+    // parent gets focus anyway - that isn't an error.
+    success();
   } else {
     page()->currentFrame()->parentFrame()->setFocus();
     success();
